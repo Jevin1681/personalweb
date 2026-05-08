@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Data List</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f4f9; padding: 10px; }
+        .container { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .btn { padding: 8px 12px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; font-size: 14px; }
+        .table-scroll { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 1000px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background: #333; color: white; }
+        .name-link { color: #007bff; font-weight: bold; text-decoration: none; }
+        tr:nth-child(even) { background: #f9f9f9; }
+
+        /* Container for the table with max-height */
+        .table-scroll {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 500px; /* Default height for desktop */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        /* Mobile specific height */
+        @media (max-width: 600px) {
+            .table-scroll {
+                max-height: 350px; 
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate; /* Required for sticky borders */
+            border-spacing: 0;
+        }
+
+        /* Sticky Header Logic */
+        thead th {
+            position: sticky;
+            top: 0;
+            background-color: #333;
+            color: white;
+            z-index: 10;
+            box-shadow: 0 2px 2px -1px rgba(0,0,0,0.4);
+        }
+
+        /* Sticky Footer Logic */
+        tfoot td {
+            position: sticky;
+            bottom: 0;
+            background-color: #eee;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 -2px 2px -1px rgba(0,0,0,0.2);
+        }
+
+        /* Ensure borders look clean with separate collapse */
+        th, td {
+            border-bottom: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            padding: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Registry Details</h2>
+            <a href="/add-page" class="btn">+ Add New</a>
+        </div>
+
+        <!-- Search & Filter Section -->
+        <div class="container" style="margin-bottom: 20px;">
+            <form method="GET" action="/" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                <input type="text" name="fullname" placeholder="Filter by Name" 
+                    value="{{ filters.fullname or '' }}" 
+                    style="padding: 8px; border-radius: 5px; border: 1px solid #ddd; flex: 1; min-width: 150px;">
+                
+                <input type="text" name="city" placeholder="Filter by City" 
+                    value="{{ filters.city or '' }}" 
+                    style="padding: 8px; border-radius: 5px; border: 1px solid #ddd; flex: 1; min-width: 150px;">
+                
+                <button type="submit" class="btn" style="background: #28a745; border: none; cursor: pointer;">Search</button>
+                <a href="/" style="color: #666; text-decoration: none; font-size: 14px;">Reset</a>
+            </form>
+        </div>
+
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Prasang</th>
+                        <th>P-Name</th>
+                        <th>Tarikh</th>
+                        <th>Chandlo</th>
+                        <th>Vasan</th>
+                        <th>Anya</th>
+                        <th>Notru</th>
+                        <th>Gone</th>
+                        <th>City</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in records %}
+                    <tr>
+                        <td><a href="{{ url_for('profile', name=row.fullname) }}" class="name-link">{{ row.fullname }}</a></td>
+                        <td>{{ row.prasang }}</td>
+                        <td>{{ row.pname }}</td>
+                        <td>{{ row.tarikh }}</td>
+                        <td>₹{{ row.chandlo }}</td>
+                        <td>{{ row.vasan }}</td>
+                        <td>{{ row.anya }}</td>
+                        <td>{{ row.notru }}</td>
+                        <td>{{ row.gone }}</td>
+                        <td>{{ row.city }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" style="text-align: right;">GRAND TOTAL:</td>
+                        <td>₹{{ t_chandlo }}</td>
+                        <td>{{ t_vasan }}</td>
+                        <td>{{ t_anya }}</td>
+                        <td colspan="3"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

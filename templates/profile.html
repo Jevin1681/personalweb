@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ person.fullname }} - Profile</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+        .profile-container { max-width: 450px; margin: auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .top-bar { background: #007bff; color: white; padding: 30px; text-align: center; }
+        .details { padding: 20px; }
+        .item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
+        .label { color: #777; font-size: 14px; }
+        .value { font-weight: bold; color: #333; }
+        .back-link { display: block; text-align: center; padding: 15px; background: #f8f9fa; text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="top-bar">
+            <h2 style="margin:0">{{ person.fullname }}</h2>
+            <span>{{ person.city }}</span>
+        </div>
+        <div class="details">
+            <div class="item"><span class="label">Prasang:</span><span class="value">{{ person.prasang }}</span></div>
+            <div class="item"><span class="label">P-Name:</span><span class="value">{{ person.pname }}</span></div>
+            <div class="item"><span class="label">Tarikh:</span><span class="value">{{ person.tarikh }}</span></div>
+            <div class="item"><span class="label">Chandlo:</span><span class="value">₹{{ person.chandlo }}</span></div>
+            <div class="item"><span class="label">Vasan:</span><span class="value">{{ person.vasan }}</span></div>
+            <div class="item"><span class="label">Anya:</span><span class="value">{{ person.anya }}</span></div>
+            <div class="item"><span class="label">Notru:</span><span class="value">{{ person.notru }}</span></div>
+            <div class="item"><span class="label">Gone Status:</span><span class="value">{{ person.gone }}</span></div>
+        </div>
+        <a href="/" class="back-link">Back to Main List</a>
+    </div>
+</body>
+</html>

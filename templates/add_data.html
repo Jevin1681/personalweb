@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Record</title>
+    <style>
+        body { font-family: sans-serif; background: #eceff1; padding: 15px; }
+        .form-card { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 12px; }
+        .field { margin-bottom: 12px; }
+        label { display: block; font-size: 14px; margin-bottom: 4px; font-weight: bold; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        .btn-save { width: 100%; padding: 12px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <div class="form-card">
+        <h3>Add Full Details</h3>
+        <form action="/save" method="POST">
+            <div class="field"><label>Full Name</label><input type="text" name="fullname" required></div>
+            <div class="field"><label>Prasang</label><input type="text" name="prasang"></div>
+            <div class="field"><label>P-Name</label><input type="text" name="pname"></div>
+            <div class="field"><label>Tarikh (Date)</label><input type="text" name="tarikh" placeholder="DD-MM-YYYY"></div>
+            <div class="field"><label>Chandlo (Amount)</label><input type="number" name="chandlo"></div>
+            <div class="field"><label>Vasan</label><input type="number" name="vasan"></div>
+            <div class="field"><label>Anya</label><input type="number" name="anya"></div>
+            <div class="field"><label>Notru</label><input type="text" name="notru"></div>
+            <div class="field"><label>Gone Status</label><input type="text" name="gone"></div>
+            <div class="field"><label>City</label><input type="text" name="city"></div>
+            <button type="submit" class="btn-save">Save Record</button>
+            <p style="text-align:center"><a href="/" style="color:gray">Cancel</a></p>
+        </form>
+    </div>
+</body>
+</html>
