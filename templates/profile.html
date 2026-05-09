@@ -1,43 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ person.fullname }} - Profile</title>
+    <title>{{ record.fullname }} - Profile</title>
     <style>
-        body { font-family: sans-serif; background: #f0f2f5; margin: 0; padding: 20px;  display: flex; align-item: center; justify-content: center;}
-        .profile-container { max-width: 450px; margin: auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .top-bar { background: #007bff; color: white; padding: 30px; text-align: center; }
-        .details { padding: 20px; }
-        .item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
-        .label { color: #777; font-size: 14px; }
-        .value { font-weight: bold; color: #333; }
-        .back-link { display: block; text-align: center; padding: 15px; background: #f8f9fa; text-decoration: none; color: #007bff; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+        .profile-card { max-width: 600px; margin: auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .banner { background: #007bff; height: 100px; }
+        .content { padding: 30px; position: relative; }
+        .header-flex { display: flex; justify-content: space-between; align-items: flex-start; }
+        h1 { margin: 0; color: #333; font-size: 24px; }
+        .city-tag { color: #666; font-size: 14px; margin-top: 5px; display: block; }
+        
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 25px; }
+        .stat-box { background: #f8f9fa; padding: 15px; border-radius: 10px; text-align: center; border: 1px solid #eee; }
+        .stat-box label { font-size: 12px; color: #888; text-transform: uppercase; display: block; }
+        .stat-box span { font-size: 18px; font-weight: bold; color: #007bff; }
+
+        .details { margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px; }
+        .detail-row { display: flex; justify-content: space-between; margin-bottom: 10px; color: #555; }
+        
+        .btn-group { margin-top: 30px; display: flex; gap: 10px; }
+        .btn { flex: 1; padding: 12px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 14px; }
+        .btn-edit { background: #ffc107; color: #000; }
+        .btn-back { background: #6c757d; color: #fff; }
+        
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <div class="profile-container">
-        <div class="top-bar">
-            <h2 style="margin:0">{{ person.fullname }}</h2>
-            <span>{{ person.city }}</span>
+
+<div class="profile-card">
+    <div class="banner"></div>
+    <div class="content">
+        <div class="header-flex">
+            <div>
+                <h1>{{ record.fullname }}</h1>
+                <span class="city-tag">📍 {{ record.city }}</span>
+            </div>
         </div>
+
+        <div class="stats-grid">
+            <div class="stat-box">
+                <label>Chandlo</label>
+                <span>₹{{ record.chandlo or 0 }}</span>
+            </div>
+            <div class="stat-box">
+                <label>Vasan</label>
+                <span>{{ record.vasan or '-' }}</span>
+            </div>
+            <div class="stat-box">
+                <label>Anya</label>
+                <span>{{ record.anya or '-' }}</span>
+            </div>
+        </div>
+
         <div class="details">
-            <div class="item"><span class="label">Prasang:</span><span class="value">{{ person.prasang }}</span></div>
-            <div class="item"><span class="label">P-Name:</span><span class="value">{{ person.pname }}</span></div>
-            <div class="item"><span class="label">Tarikh:</span><span class="value">{{ person.tarikh }}</span></div>
-            <div class="item"><span class="label">Chandlo:</span><span class="value">₹{{ person.chandlo }}</span></div>
-            <div class="item"><span class="label">Vasan:</span><span class="value">{{ person.vasan }}</span></div>
-            <div class="item"><span class="label">Anya:</span><span class="value">{{ person.anya }}</span></div>
-            <div class="item"><span class="label">Notru:</span><span class="value">{{ person.notru }}</span></div>
-            <div class="item"><span class="la   bel">Gone Status:</span><span class="value">{{ person.gone }}</span></div>
+            <div class="detail-row"><strong>Prasang:</strong> <span>{{ record.prasang }}</span></div>
+            <div class="detail-row"><strong>Father/Husband:</strong> <span>{{ record.pname }}</span></div>
+            <div class="detail-row"><strong>Date:</strong> <span>{{ record.tarikh }}</span></div>
+            <div class="detail-row"><strong>Notru:</strong> <span>{{ record.notru }}</span></div>
+            <div class="detail-row"><strong>Gone:</strong> <span>{{ record.gone }}</span></div>
         </div>
-        <!-- Inside your profile.html -->
-        <div class="profile-header">
-            <h2>Profile of {{ record.fullname }}</h2>
-            <a href="{{ url_for('edit_page', id=record.id) }}" class="btn" style="background: #ffc107; color: #000;">
-                Edit Details
-            </a>
-        </div>      
-        <a href="/" class="back-link">Back to Main List</a>
+
+        <div class="btn-group">
+            <!-- This ID must come from your database -->
+            <a href="{{ url_for('edit_page', id=record.id) }}" class="btn btn-edit">Edit Profile</a>
+            <a href="/" class="btn btn-back">Back to List</a>
+        </div>
     </div>
+</div>
+
 </body>
 </html>
