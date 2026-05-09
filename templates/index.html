@@ -8,13 +8,11 @@
 
         body {
             font-family: 'Segoe UI', sans-serif;
-            background: #0f0c29;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background: linear-gradient(135deg, #e0eafc, #cfdef3);
             min-height: 100vh;
             padding: 20px;
         }
 
-        /* Top Bar */
         .topbar {
             display: flex;
             justify-content: space-between;
@@ -23,14 +21,22 @@
         }
         .topbar h1 {
             font-size: 22px;
-            color: #fff;
+            color: #1a202c;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
-        .topbar span {
-            font-size: 13px;
-            color: #a0aec0;
+        .topbar span { font-size: 13px; color: #718096; }
+
+        .count-badge {
+            background: rgba(102,126,234,0.15);
+            color: #4c51bf;
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-left: 8px;
+            font-weight: 600;
         }
+
         .btn-add {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
@@ -39,15 +45,14 @@
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+            box-shadow: 0 4px 15px rgba(102,126,234,0.35);
             transition: opacity 0.2s;
         }
         .btn-add:hover { opacity: 0.85; }
 
-        /* Filter Card */
         .filter-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.6);
+            border: 1px solid rgba(255,255,255,0.8);
             border-radius: 14px;
             padding: 14px 18px;
             display: flex;
@@ -55,16 +60,16 @@
             flex-wrap: wrap;
             align-items: center;
             margin-bottom: 18px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
         }
         .filter-card input {
             flex: 1;
             min-width: 160px;
             padding: 9px 14px;
             border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.08);
-            color: #fff;
+            border: 1px solid #cbd5e0;
+            background: rgba(255,255,255,0.8);
+            color: #2d3748;
             font-size: 13px;
             outline: none;
         }
@@ -73,7 +78,7 @@
         .btn-search {
             padding: 9px 20px;
             background: linear-gradient(135deg, #11998e, #38ef7d);
-            color: #000;
+            color: #1a202c;
             border: none;
             border-radius: 8px;
             font-weight: 700;
@@ -81,20 +86,20 @@
             cursor: pointer;
         }
         .btn-reset {
-            color: #a0aec0;
+            color: #718096;
             text-decoration: none;
             font-size: 13px;
             padding: 9px 4px;
         }
-        .btn-reset:hover { color: #fff; }
+        .btn-reset:hover { color: #2d3748; }
 
-        /* Table Wrapper */
         .table-wrapper {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.55);
+            border: 1px solid rgba(255,255,255,0.85);
             border-radius: 16px;
             overflow: hidden;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 8px 32px rgba(102,126,234,0.1);
         }
         .table-scroll {
             overflow-x: auto;
@@ -111,58 +116,43 @@
         }
 
         thead th {
-            background: rgba(102,126,234,0.25);
-            color: #c3cfe2;
+            background: rgba(102,126,234,0.12);
+            color: #4a5568;
             padding: 13px 14px;
             text-align: left;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.6px;
             position: sticky;
             top: 0;
             z-index: 10;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(102,126,234,0.15);
         }
 
         tbody tr { transition: background 0.15s; }
-        tbody tr:hover td { background: rgba(102,126,234,0.12); }
+        tbody tr:hover td { background: rgba(102,126,234,0.07); }
         tbody td {
             padding: 12px 14px;
-            color: #e2e8f0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: #2d3748;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            background: transparent;
         }
 
-        .name-link {
-            color: #90cdf4;
-            font-weight: 600;
-            text-decoration: none;
-        }
-        .name-link:hover { color: #fff; text-decoration: underline; }
+        .name-link { color: #5a67d8; font-weight: 600; text-decoration: none; }
+        .name-link:hover { color: #434190; text-decoration: underline; }
+        .amount { color: #276749; font-weight: 600; }
 
-        .amount { color: #68d391; font-weight: 600; }
-
-        /* Footer */
         tfoot td {
             padding: 13px 14px;
             font-weight: 700;
-            background: rgba(104,211,145,0.1);
-            color: #68d391;
+            background: #fff;
+            color: #276749;
             position: sticky;
             bottom: 0;
             z-index: 4;
-            border-top: 1px solid rgba(104,211,145,0.2);
+            border-top: 2px solid #c6f6d5;
             font-size: 13px;
-        }
-
-        /* Record count badge */
-        .count-badge {
-            background: rgba(102,126,234,0.3);
-            color: #c3cfe2;
-            font-size: 12px;
-            padding: 3px 10px;
-            border-radius: 20px;
-            margin-left: 10px;
         }
 
         @media (max-width: 600px) {
@@ -225,7 +215,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="5" style="text-align:right; color:#a0aec0; font-size:12px; letter-spacing:1px;">GRAND TOTAL</td>
+                        <td colspan="5" style="text-align:right; color:#718096; font-size:12px; letter-spacing:1px;">GRAND TOTAL</td>
                         <td>₹{{ t_chandlo }}</td>
                         <td>₹{{ t_vasan }}</td>
                         <td>₹{{ t_anya }}</td>
