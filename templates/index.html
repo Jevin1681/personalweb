@@ -170,9 +170,9 @@
                         <td>{{ row.notru }}</td>
                         <td>{{ row.gone }}</td>
                         <td>{{ row.city }}</td>
-                        <td class="fixed-column">
-                            <a href="{{ url_for('edit_page', name=record.fullname) }}" class="btn-sm btn-warning">Edit</a>
-                            <a href="{{ url_for('delete_record', name=record.fullname) }}" class="btn-sm btn-danger" onclick="return confirm('Delete karein?')">Delete</a>
+                        <td class="action-column">
+                            <a href="{{ url_for('edit_page', name=row.fullname) }}" class="btn-sm btn-warning">Edit</a>
+                            <a href="{{ url_for('delete_record', name=row.fullname) }}" class="btn-sm btn-danger" onclick="return confirm('Delete karein?')">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}
