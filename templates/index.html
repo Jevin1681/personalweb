@@ -63,6 +63,32 @@
             border-right: 1px solid #ddd;
             padding: 12px;
         }
+
+        .table-container {
+            overflow-x: auto;
+            position: relative;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+        }
+
+        /* Sabse last column (Actions) ko fix karne ke liye */
+        td:last-child, th:last-child {
+            position: sticky;
+            right: 0;
+            background-color: #f8f9fa; /* Background color zaroori hai taki peeche ka text na dikhe */
+            border-left: 2px solid #ddd;
+            z-index: 2;
+        }
+
+        th:last-child {
+            background-color: #007bff; /* Header color */
+            color: white;
+            z-index: 3;
+        }
     </style>
 </head>
 <body>
@@ -102,6 +128,7 @@
                         <th>Notru</th>
                         <th>Gone</th>
                         <th>City</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -117,6 +144,10 @@
                         <td>{{ row.notru }}</td>
                         <td>{{ row.gone }}</td>
                         <td>{{ row.city }}</td>
+                        <td>
+                            <a href="{{ url_for('edit_page', name=record.fullname) }}">Edit</a> | 
+                            <a href="{{ url_for('delete_record', name=record.fullname) }}" onclick="return confirm('Pakka delete karna hai?')">Delete</a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
