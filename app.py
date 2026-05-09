@@ -121,10 +121,17 @@ def save():
 def profile(name):
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM info WHERE fullname = %s", (name,))
-    person = cursor.fetchone()
+    
+    # We fetch by name, but we MUST get the 'id' for the Edit link
+    query = "SELECT * FROM info WHERE fullname = %s"
+    cursor.execute(query, (name,))
+    record = cursor.fetchone()
     conn.close()
-    return render_template('profile.html', person=person)
+
+    if record:
+        return render_template('profile.html', record=record)
+    else:
+        return "User Not Found", 404
 
 
 if __name__ == '__main__':
