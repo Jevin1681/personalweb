@@ -46,21 +46,7 @@
 
         .name-link { color: #007bff; font-weight: bold; text-decoration: none; }
 
-        /* Sticky Action Column */
-        td.action-col, th.action-col {
-            position: sticky;
-            right: 0;
-            z-index: 3;
-            border-left: 2px solid #ddd;
-            text-align: center;
-            min-width: 130px;
-        }
-        td.action-col { background: #fff; }
-        th.action-col { background: #007bff; z-index: 11; }
-        tr:nth-child(even) td.action-col { background: #f9f9f9; }
 
-        .btn-edit { background: #ffc107; color: #000; padding: 5px 10px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: bold; display: inline-block; margin: 2px; }
-        .btn-delete { background: #dc3545; color: white; padding: 5px 10px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: bold; display: inline-block; margin: 2px; }
 
         @media (max-width: 600px) {
         .table-scroll {
@@ -98,7 +84,6 @@
                         <th>Notru</th>
                         <th>Gone</th>
                         <th>City</th>
-                        <th class="action-col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -115,10 +100,6 @@
                         <td>{{ row.notru }}</td>
                         <td>{{ row.gone }}</td>
                         <td>{{ row.city }}</td>
-                        <td class="action-col">
-                            <a href="{{ url_for('edit_page', name=row.fullname) }}" class="btn-edit">Edit</a>
-                            <a href="{{ url_for('delete_record', name=row.fullname) }}" class="btn-delete" onclick="return confirm('Delete karein?')">Delete</a>
-                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -128,7 +109,7 @@
                         <td>₹{{ t_chandlo }}</td>
                         <td>₹{{ t_vasan }}</td>
                         <td>₹{{ t_anya }}</td>
-                        <td colspan="4"></td>
+                        <td colspan="3"></td>
                     </tr>
                 </tfoot>
             </table>
