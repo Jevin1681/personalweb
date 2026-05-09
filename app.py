@@ -67,33 +67,36 @@ def edit_page(id):
 
 # Route to process the Update
 @app.route('/update/<int:id>', methods=['POST'])
+@app.route('/update/<int:id>', methods=['POST'])
 def update_record(id):
-    # Using .get() is safer
-    data = (
-        request.form.get('fullname'),
-        request.form.get('prasang'),
-        request.form.get('pname'),
-        request.form.get('tarikh'),
-        request.form.get('chandlo'),
-        request.form.get('vasan'),
-        request.form.get('anya'),
-        request.form.get('notru'),
-        request.form.get('gone'),
-        request.form.get('city'),
-        id
-    )
+    # .get() use karne se 'Bad Request' error nahi aayega
+    fullname = request.form.get('fullname')
+    prasang = request.form.get('prasang')
+    pname = request.form.get('pname')
+    tarikh = request.form.get('tarikh')
+    chandlo = request.form.get('chandlo')
+    vasan = request.form.get('vasan')
+    anya = request.form.get('anya')
+    notru = request.form.get('notru') # <-- Check this
+    gone = request.form.get('gone')   # <-- Check this
+    city = request.form.get('city')
 
     conn = get_db_connection()
     cursor = conn.cursor()
-    sql = """UPDATE info SET fullname=%s, prasang=%s, pname=%s, tarikh=%s, 
+    
+    # SQL Query mein bhi Notru aur Gone hona chahiye
+    sql = """UPDATE info SET 
+             fullname=%s, prasang=%s, pname=%s, tarikh=%s, 
              chandlo=%s, vasan=%s, anya=%s, notru=%s, gone=%s, city=%s 
              WHERE id=%s"""
     
-    cursor.execute(sql, data)
+    values = (fullname, prasang, pname, tarikh, chandlo, vasan, anya, notru, gone, city, id)
+    
+    cursor.execute(sql, values)
     conn.commit()
     conn.close()
     
-    return redirect(url_for('index')) # Go back to home after update
+    return redirect(url_for('index'))
 
 @app.route('/save', methods=['POST'])
 def save():
