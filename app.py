@@ -27,6 +27,7 @@ def index():
     cursor = conn.cursor(dictionary=True)
 
     query = "SELECT * FROM info WHERE 1=1"
+    order = " ORDER BY STR_TO_DATE(tarikh, '%Y-%m-%d') DESC"
     params = []
     if fullname_filter:
         query += " AND fullname LIKE %s"
@@ -35,7 +36,7 @@ def index():
         query += " AND city LIKE %s"
         params.append(f"%{city_filter}%")
 
-    cursor.execute(query, params)
+    cursor.execute(query + order, params)
     records = cursor.fetchall()
     conn.close()
 
