@@ -109,16 +109,16 @@ def edit_page(name):
     conn.close()
     return render_template('edit.html', record=record)
 
-@app.route('/update/<int:record_id>', methods=['POST'])
-def update_record(record_id):
+@app.route('/update/<original_name>', methods=['POST'])
+def update_record(original_name):
     data = request.form
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
-        "UPDATE info SET fullname=%s, prasang=%s, pname=%s, tarikh=%s, chandlo=%s, vasan=%s, anya=%s, notru=%s, gone=%s, city=%s WHERE id=%s",
+        "UPDATE info SET fullname=%s, prasang=%s, pname=%s, tarikh=%s, chandlo=%s, vasan=%s, anya=%s, notru=%s, gone=%s, city=%s WHERE fullname=%s",
         (data['fullname'], data.get('prasang'), data.get('pname'), data.get('tarikh'),
          data.get('chandlo') or None, data.get('vasan') or None, data.get('anya') or None,
-         data.get('notru'), data.get('gone'), data.get('city'), record_id)
+         data.get('notru'), data.get('gone'), data.get('city'), original_name)
     )
     conn.commit()
     conn.close()
