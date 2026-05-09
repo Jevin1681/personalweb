@@ -4,12 +4,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Record</title>
     <style>
-        body { font-family: sans-serif; background: #eceff1; padding: 15px;}
-        .form-card { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 12px; }
+        * { box-sizing: border-box; }
+        body { font-family: sans-serif; background: #eceff1; padding: 15px; margin: 0; }
+        .form-card { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .form-card h3 { margin-top: 0; }
         .field { margin-bottom: 12px; }
         label { display: block; font-size: 14px; margin-bottom: 4px; font-weight: bold; }
-        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        .btn-save { width: 100%; padding: 12px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+        .btn-save { width: 100%; padding: 12px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin-top: 5px; }
+        .btn-save:hover { background: #218838; }
+        .cancel-link { display: block; text-align: center; margin-top: 10px; color: gray; text-decoration: none; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -19,15 +23,15 @@
             <div class="field"><label>Full Name</label><input type="text" name="fullname" required></div>
             <div class="field"><label>Prasang</label><input type="text" name="prasang"></div>
             <div class="field"><label>P-Name</label><input type="text" name="pname"></div>
-            <div class="field"><label>Tarikh (Date)</label><input type="text" name="tarikh" placeholder="DD-MM-YYYY"></div>
-            <div class="field"><label>Chandlo (Amount)</label><input type="number" name="chandlo"></div>
-            <div class="field"><label>Vasan</label><input type="number" name="vasan"></div>
-            <div class="field"><label>Anya</label><input type="number" name="anya"></div>
+            <div class="field"><label>Tarikh (Date)</label><input type="date" name="tarikh"></div>
+            <div class="field"><label>Chandlo (₹)</label><input type="number" name="chandlo" min="0"></div>
+            <div class="field"><label>Vasan (₹)</label><input type="number" name="vasan" min="0"></div>
+            <div class="field"><label>Anya (₹)</label><input type="number" name="anya" min="0"></div>
             <div class="field"><label>Notru</label><input type="text" name="notru"></div>
             <div class="field"><label>Gone Status</label><input type="text" name="gone"></div>
             <div class="field"><label>City</label><input type="text" name="city"></div>
             <button type="submit" class="btn-save">Save Record</button>
-            <p style="text-align:center"><a href="/" style="color:gray">Cancel</a></p>
+            <a href="/" class="cancel-link">Cancel</a>
         </form>
     </div>
 </body>

@@ -4,130 +4,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Data List</title>
     <style>
-        body { font-family: sans-serif; background: #f4f4f9; padding: 10px; }
+        * { box-sizing: border-box; }
+        body { font-family: sans-serif; background: #f4f4f9; padding: 10px; margin: 0; }
         .container { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .btn { padding: 8px 12px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; font-size: 14px; }
-        .table-scroll { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 1000px; }
-        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
-        th { background: #333; color: white; }
-        .name-link { color: #007bff; font-weight: bold; text-decoration: none; }
-        tr:nth-child(even) { background: #f9f9f9; }
+        .header h2 { margin: 0; }
+        .btn { padding: 8px 12px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; font-size: 14px; border: none; cursor: pointer; }
+        .btn-green { background: #28a745; }
 
-        /* Container for the table with max-height */
+        .filter-form { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 15px; }
+        .filter-form input { padding: 8px; border-radius: 5px; border: 1px solid #ddd; flex: 1; min-width: 150px; }
+        .filter-form a { color: #666; text-decoration: none; font-size: 14px; }
+
         .table-scroll {
             overflow-x: auto;
             overflow-y: auto;
-            max-height: calc(100vh - 300px);
+            max-height: calc(100vh - 280px);
             border: 1px solid #ddd;
             border-radius: 8px;
         }
 
-        /* Mobile specific height */
-        @media (max-width: 600px) {
-            .table-scroll {
-                max-height: calc(100vh - 320px); /* Mobile par thoda zyada space top bar ke liye */
-            }
-        }
-
         table {
             width: 100%;
-            border-collapse: separate; /* Required for sticky borders */
-            border-spacing: 0;
-        }
-
-        /* Sticky Header Logic */
-        thead th {
-            position: sticky;
-            top: 0;
-            background-color: #333;
-            color: white;
-            z-index: 10;
-            box-shadow: 0 2px 2px -1px rgba(0,0,0,0.4);
-        }
-
-        /* Ensure borders look clean with separate collapse */
-        .table-container {
-            overflow-x: auto;
-            position: relative;
-        }
-
-        table {
             border-collapse: separate;
             border-spacing: 0;
-            width: 100%;
+            font-size: 13px;
+            min-width: 900px;
         }
 
-        /* Last column (Actions) ko fix karne ke liye */
-        td:last-child, th:last-child {
-            position: sticky;
-            right: 0;
-            background-color: white; 
-            z-index: 2;
-            border-left: 2px solid #ddd;
-            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-        }
+        th, td { padding: 10px; border-bottom: 1px solid #ddd; border-right: 1px solid #ddd; text-align: left; }
+        th { background: #333; color: white; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 2px -1px rgba(0,0,0,0.4); }
+        tr:nth-child(even) td { background: #f9f9f9; }
+        tfoot td { font-weight: bold; background: #e9f7ef; }
 
-        th:last-child {
-            background-color: #007bff;
-            color: white;
-            z-index: 3;
-        }
-        /* Table Layout for Mobile */
-        .table-container {
-            overflow-x: auto;
-            position: relative;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        table {
-            border-collapse: separate;
-            border-spacing: 0;
-            min-width: 800px; /* Force scroll on mobile */
-        }
+        .name-link { color: #007bff; font-weight: bold; text-decoration: none; }
 
         /* Sticky Action Column */
-        .action-col {
+        td.action-col, th.action-col {
             position: sticky;
             right: 0;
-            background: #ffffff !important;
             z-index: 5;
             border-left: 2px solid #ddd;
-            width: 150px; /* Mobile par tap karne ke liye wide rakha hai */
             text-align: center;
+            min-width: 130px;
         }
+        td.action-col { background: #fff; }
+        th.action-col { background: #007bff; z-index: 11; }
+        tr:nth-child(even) td.action-col { background: #f9f9f9; }
 
-        th.action-col {
-            background-color: #007bff !important;
-            color: white;
-            z-index: 6;
-        }
-
-        /* Edit & Delete Buttons UI */
-        .btn-ui {
-            padding: 8px 12px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 14px;
-            display: inline-block;
-            margin: 2px;
-            font-weight: bold;
-        }
-
-        .btn-edit { background-color: #ffc107; color: black; border: 1px solid #e0a800; }
-        .btn-delete { background-color: #dc3545; color: white; border: 1px solid #c82333; }
-
-        /* Totals Box Design */
-        .total-box {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 5px solid #28a745;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-        }
-    
+        .btn-edit { background: #ffc107; color: #000; padding: 5px 10px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: bold; display: inline-block; margin: 2px; }
+        .btn-delete { background: #dc3545; color: white; padding: 5px 10px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: bold; display: inline-block; margin: 2px; }
     </style>
 </head>
 <body>
@@ -137,26 +63,18 @@
             <a href="/add-page" class="btn">+ Add New</a>
         </div>
 
-        <!-- Search & Filter Section -->
-        <div class="container" style="margin-bottom: 20px;">
-            <form method="GET" action="/" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-                <input type="text" name="fullname" placeholder="Filter by Name" 
-                    value="{{ filters.fullname or '' }}" 
-                    style="padding: 8px; border-radius: 5px; border: 1px solid #ddd; flex: 1; min-width: 150px;">
-                
-                <input type="text" name="city" placeholder="Filter by City" 
-                    value="{{ filters.city or '' }}" 
-                    style="padding: 8px; border-radius: 5px; border: 1px solid #ddd; flex: 1; min-width: 150px;">
-                
-                <button type="submit" class="btn" style="background: #28a745; border: none; cursor: pointer;">Search</button>
-                <a href="/" style="color: #666; text-decoration: none; font-size: 14px;">Reset</a>
-            </form>
-        </div>
+        <form method="GET" action="/" class="filter-form">
+            <input type="text" name="fullname" placeholder="Filter by Name" value="{{ filters.fullname or '' }}">
+            <input type="text" name="city" placeholder="Filter by City" value="{{ filters.city or '' }}">
+            <button type="submit" class="btn btn-green">Search</button>
+            <a href="/">Reset</a>
+        </form>
 
         <div class="table-scroll">
             <table>
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Full Name</th>
                         <th>Prasang</th>
                         <th>P-Name</th>
@@ -167,36 +85,37 @@
                         <th>Notru</th>
                         <th>Gone</th>
                         <th>City</th>
-                        <th class="fixed-column">Actions</th>
+                        <th class="action-col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for row in records %}
                     <tr>
+                        <td>{{ loop.index }}</td>
                         <td><a href="{{ url_for('profile', name=row.fullname) }}" class="name-link">{{ row.fullname }}</a></td>
                         <td>{{ row.prasang }}</td>
                         <td>{{ row.pname }}</td>
                         <td>{{ row.tarikh }}</td>
-                        <td>₹{{ row.chandlo }}</td>
-                        <td>₹{{ row.vasan }}</td>
-                        <td>₹{{ row.anya }}</td>
+                        <td>₹{{ row.chandlo or 0 }}</td>
+                        <td>₹{{ row.vasan or 0 }}</td>
+                        <td>₹{{ row.anya or 0 }}</td>
                         <td>{{ row.notru }}</td>
                         <td>{{ row.gone }}</td>
                         <td>{{ row.city }}</td>
-                        <td class="action-column">
-                            <a href="{{ url_for('edit_page', name=row.fullname) }}" class="btn-sm btn-warning">Edit</a>
-                            <a href="{{ url_for('delete_record', name=row.fullname) }}" class="btn-sm btn-danger" onclick="return confirm('Delete karein?')">Delete</a>
+                        <td class="action-col">
+                            <a href="{{ url_for('edit_page', name=row.fullname) }}" class="btn-edit">Edit</a>
+                            <a href="{{ url_for('delete_record', name=row.fullname) }}" class="btn-delete" onclick="return confirm('Delete karein?')">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="4" style="text-align: right;">GRAND TOTAL:</td>
+                        <td colspan="5" style="text-align: right;">GRAND TOTAL:</td>
                         <td>₹{{ t_chandlo }}</td>
-                        <td>{{ t_vasan }}</td>
-                        <td>{{ t_anya }}</td>
-                        <td colspan="3"></td>
+                        <td>₹{{ t_vasan }}</td>
+                        <td>₹{{ t_anya }}</td>
+                        <td colspan="4"></td>
                     </tr>
                 </tfoot>
             </table>

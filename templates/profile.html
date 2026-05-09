@@ -8,24 +8,23 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
         .profile-card { max-width: 600px; margin: auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
         .banner { background: #007bff; height: 100px; }
-        .content { padding: 30px; position: relative; }
-        .header-flex { display: flex; justify-content: space-between; align-items: flex-start; }
+        .content { padding: 30px; }
         h1 { margin: 0; color: #333; font-size: 24px; }
         .city-tag { color: #666; font-size: 14px; margin-top: 5px; display: block; }
-        
+
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 25px; }
         .stat-box { background: #f8f9fa; padding: 15px; border-radius: 10px; text-align: center; border: 1px solid #eee; }
-        .stat-box label { font-size: 12px; color: #888; text-transform: uppercase; display: block; }
+        .stat-box label { font-size: 12px; color: #888; text-transform: uppercase; display: block; margin-bottom: 5px; }
         .stat-box span { font-size: 18px; font-weight: bold; color: #007bff; }
 
         .details { margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px; }
         .detail-row { display: flex; justify-content: space-between; margin-bottom: 10px; color: #555; }
-        
-        .btn-group { margin-top: 30px; display: flex; gap: 10px; }
-        .btn { flex: 1; padding: 12px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 14px; }
+
+        .btn-group { margin-top: 25px; display: flex; gap: 10px; }
+        .btn-ui { flex: 1; padding: 12px; text-align: center; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 14px; display: block; }
         .btn-edit { background: #ffc107; color: #000; }
         .btn-back { background: #6c757d; color: #fff; }
-        
+
         @media (max-width: 480px) {
             .stats-grid { grid-template-columns: 1fr; }
         }
@@ -36,12 +35,8 @@
 <div class="profile-card">
     <div class="banner"></div>
     <div class="content">
-        <div class="header-flex">
-            <div>
-                <h1>{{ record.fullname }}</h1>
-                <span class="city-tag">📍 {{ record.city }}</span>
-            </div>
-        </div>
+        <h1>{{ record.fullname }}</h1>
+        <span class="city-tag">📍 {{ record.city }}</span>
 
         <div class="stats-grid">
             <div class="stat-box">
@@ -50,11 +45,11 @@
             </div>
             <div class="stat-box">
                 <label>Vasan</label>
-                <span>{{ record.vasan or '-' }}</span>
+                <span>₹{{ record.vasan or 0 }}</span>
             </div>
             <div class="stat-box">
                 <label>Anya</label>
-                <span>{{ record.anya or '-' }}</span>
+                <span>₹{{ record.anya or 0 }}</span>
             </div>
         </div>
 
@@ -63,10 +58,10 @@
             <div class="detail-row"><strong>Person Name:</strong> <span>{{ record.pname }}</span></div>
             <div class="detail-row"><strong>Date:</strong> <span>{{ record.tarikh }}</span></div>
             <div class="detail-row"><strong>Notru:</strong> <span>{{ record.notru }}</span></div>
-            <div class="detail-row"><strong>Gaya hata ?:</strong> <span>{{ record.gone }}</span></div>
+            <div class="detail-row"><strong>Gaya hata?:</strong> <span>{{ record.gone }}</span></div>
         </div>
 
-        <div class="actions">
+        <div class="btn-group">
             <a href="{{ url_for('edit_page', name=record.fullname) }}" class="btn-ui btn-edit">Edit This Profile</a>
             <a href="/" class="btn-ui btn-back">Back</a>
         </div>
