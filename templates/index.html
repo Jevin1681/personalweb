@@ -4,42 +4,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Data List</title>
     <style>
-        body { 
-            font-family: sans-serif; 
-            background: #f4f4f9; 
-            padding: 10px; 
-            margin: 0; 
-            height: 100vh; /* Body ki height fix ki */
-            display: flex;
-            flex-direction: column;
-        }
+        body { font-family: sans-serif; background: #f4f4f9; padding: 10px; }
+        .container { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .btn { padding: 8px 12px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; font-size: 14px; }
+        .table-scroll { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 1000px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background: #333; color: white; }
+        .name-link { color: #007bff; font-weight: bold; text-decoration: none; }
+        tr:nth-child(even) { background: #f9f9f9; }
 
-        .container { 
-            background: white; 
-            padding: 15px; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1; /* Container ko bachi hui jagah lene dein */
-        }
-
-        /* Table Scroll Area - Screen ke hisab se dynamic */
+        /* Container for the table with max-height */
         .table-scroll {
-            overflow: auto;
-            height: calc(100vh - 280px); /* Adjust this value based on your top headers */
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 90%; /* Default height for desktop */
             border: 1px solid #ddd;
             border-radius: 8px;
-            position: relative;
+        }
+
+        /* Mobile specific height */
+        @media (max-width: 600px) {
+            .table-scroll {
+                height: calc(100vh - 320px); /* Mobile par thoda zyada space top bar ke liye */
+            }
         }
 
         table {
             width: 100%;
-            border-collapse: separate;
+            border-collapse: separate; /* Required for sticky borders */
             border-spacing: 0;
         }
 
-        /* Sticky Header */
+        /* Sticky Header Logic */
         thead th {
             position: sticky;
             top: 0;
@@ -49,7 +47,7 @@
             box-shadow: 0 2px 2px -1px rgba(0,0,0,0.4);
         }
 
-        /* Sticky Footer */
+        /* Sticky Footer Logic */
         tfoot td {
             position: sticky;
             bottom: 0;
@@ -59,17 +57,11 @@
             box-shadow: 0 -2px 2px -1px rgba(0,0,0,0.2);
         }
 
+        /* Ensure borders look clean with separate collapse */
         th, td {
-            padding: 12px;
             border-bottom: 1px solid #ddd;
             border-right: 1px solid #ddd;
-            text-align: left;
-        }
-
-        @media (max-width: 600px) {
-            .table-scroll {
-                height: calc(100vh - 320px); /* Mobile par thoda zyada space top bar ke liye */
-            }
+            padding: 12px;
         }
     </style>
 </head>
