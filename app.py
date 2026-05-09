@@ -15,8 +15,11 @@ def get_db_connection():
         ssl_disabled=False
     )
 
-@app.route('/')
+@app.route('/', methods=['GET', 'HEAD'])
 def index():
+    if request.method == 'HEAD':
+        return '', 200
+
     fullname_filter = request.args.get('fullname', '')
     city_filter = request.args.get('city', '')
     
@@ -36,17 +39,15 @@ def index():
     records = cursor.fetchall()
     conn.close()
 
-    # Safe Totals Calculation
+    # Safe Totals (Chandlo only as Vasan/Anya are strings)
     total_chandlo = 0
     for item in records:
         try:
-            # Sirf numbers ko hi plus karega
-            if item['chandlo']:
+            if item.get('chandlo'):
                 total_chandlo += int(item['chandlo'])
         except (ValueError, TypeError):
             continue
 
-    # Note: Vasan aur Anya photo mein text hain, isliye unka Total calculate nahi hoga
     return render_template('index.html', 
                            records=records, 
                            filters=request.args,
@@ -67,7 +68,6 @@ def edit_page(name):
 
 @app.route('/update/<old_name>', methods=['POST'])
 def update_record(old_name):
-    # Form se naya data lena
     fullname = request.form.get('fullname')
     prasang = request.form.get('prasang')
     pname = request.form.get('pname')
@@ -81,19 +81,14 @@ def update_record(old_name):
 
     conn = get_db_connection()
     cursor = conn.cursor()
-    
-    # WHERE fullname = old_name use karenge kyunki id delete kar di hai
     sql = """UPDATE info SET 
              fullname=%s, prasang=%s, pname=%s, tarikh=%s, 
              chandlo=%s, vasan=%s, anya=%s, notru=%s, gone=%s, city=%s 
              WHERE fullname=%s"""
     
-    values = (fullname, prasang, pname, tarikh, chandlo, vasan, anya, notru, gone, city, old_name)
-    
-    cursor.execute(sql, values)
+    cursor.execute(sql, (fullname, prasang, pname, tarikh, chandlo, vasan, anya, notru, gone, city, old_name))
     conn.commit()
     conn.close()
-    
     return redirect(url_for('index'))
 
 @app.route('/delete/<name>')
@@ -113,15 +108,14 @@ def save():
         request.form.get('pname'),
         request.form.get('tarikh'),
         request.form.get('chandlo') or 0,
-        request.form.get('vasan') or 0,
-        request.form.get('anya') or 0,
+        request.form.get('vasan'),
+        request.form.get('anya'),
         request.form.get('notru'),
         request.form.get('gone'),
         request.form.get('city')
     )
     conn = get_db_connection()
     cursor = conn.cursor()
-    # Ensure column order matches your DB
     sql = "INSERT INTO info (prasang, fullname, pname, tarikh, chandlo, vasan, anya, notru, gone, city) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     cursor.execute(sql, data)
     conn.commit()

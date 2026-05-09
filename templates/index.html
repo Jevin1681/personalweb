@@ -47,23 +47,7 @@
             box-shadow: 0 2px 2px -1px rgba(0,0,0,0.4);
         }
 
-        /* Sticky Footer Logic */
-        tfoot td {
-            position: sticky;
-            bottom: 0;
-            background-color: #eee;
-            font-weight: bold;
-            z-index: 10;
-            box-shadow: 0 -2px 2px -1px rgba(0,0,0,0.2);
-        }
-
         /* Ensure borders look clean with separate collapse */
-        th, td {
-            border-bottom: 1px solid #ddd;
-            border-right: 1px solid #ddd;
-            padding: 12px;
-        }
-
         .table-container {
             overflow-x: auto;
             position: relative;
@@ -73,6 +57,22 @@
             border-collapse: separate;
             border-spacing: 0;
             width: 100%;
+        }
+
+        /* Last column (Actions) ko fix karne ke liye */
+        td:last-child, th:last-child {
+            position: sticky;
+            right: 0;
+            background-color: white; 
+            z-index: 2;
+            border-left: 2px solid #ddd;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+        }
+
+        th:last-child {
+            background-color: #007bff;
+            color: white;
+            z-index: 3;
         }
 
         /* Sabse last column (Actions) ko fix karne ke liye */
@@ -171,8 +171,10 @@
                         <td>{{ row.gone }}</td>
                         <td>{{ row.city }}</td>
                         <td>
-                            <a href="{{ url_for('edit_page', name=record.fullname) }}">Edit</a> | 
-                            <a href="{{ url_for('delete_record', name=record.fullname) }}" onclick="return confirm('Pakka delete karna hai?')">Delete</a>
+                            <a href="{{ url_for('edit_page', name=record.fullname) }}" class="btn-sm btn-warning">Edit</a>
+                            <a href="{{ url_for('delete_record', name=record.fullname) }}" 
+                            class="btn-sm btn-danger" 
+                            onclick="return confirm('Delete this record?')">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}
