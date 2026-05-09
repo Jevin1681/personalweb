@@ -35,7 +35,14 @@
         th, td { padding: 10px; border-bottom: 1px solid #ddd; border-right: 1px solid #ddd; text-align: left; }
         th { background: #333; color: white; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 2px -1px rgba(0,0,0,0.4); }
         tr:nth-child(even) td { background: #f9f9f9; }
-        tfoot td { font-weight: bold; background: #e9f7ef; }
+        tfoot tr td {
+            font-weight: bold;
+            background: #e9f7ef;
+            position: sticky;
+            bottom: 0;
+            z-index: 4;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+        }
 
         .name-link { color: #007bff; font-weight: bold; text-decoration: none; }
 
