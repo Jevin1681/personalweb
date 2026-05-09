@@ -66,9 +66,9 @@
             <div class="detail-row"><strong>Gaya hata ?:</strong> <span>{{ record.gone }}</span></div>
         </div>
 
-        <div class="btn-group">
-            {% comment %} <a href="{{ url_for('edit_page', id=record.id) }}" class="btn btn-edit">Edit Profile</a> {% endcomment %}
-            <a href="/" class="btn btn-back">Back to List</a>
+        <div class="actions">
+            <a href="{{ url_for('edit_page', name=record.fullname) }}" class="btn-ui btn-edit">Edit This Profile</a>
+            <a href="/" class="btn-ui btn-back">Back</a>
         </div>
     </div>
 </div>

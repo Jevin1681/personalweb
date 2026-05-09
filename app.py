@@ -39,88 +39,21 @@ def index():
     records = cursor.fetchall()
     conn.close()
 
-    # Safe Totals (Chandlo only as Vasan/Anya are strings)
+    # Fixed Total Calculation
     total_chandlo = 0
     for item in records:
         try:
-            if item.get('chandlo'):
-                total_chandlo += int(item['chandlo'])
+            # Agar value numeric hai tabhi plus karega
+            val = item.get('chandlo')
+            if val and str(val).isdigit():
+                total_chandlo += int(val)
         except (ValueError, TypeError):
             continue
 
     return render_template('index.html', 
                            records=records, 
                            filters=request.args,
-                           t_chandlo=total_chandlo, )
-
-@app.route('/add-page')
-def add_page():
-    return render_template('add_data.html')
-
-@app.route('/edit/<name>')
-def edit_page(name):
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM info WHERE fullname = %s", (name,))
-    record = cursor.fetchone()
-    conn.close()
-    return render_template('edit.html', record=record)
-
-@app.route('/update/<old_name>', methods=['POST'])
-def update_record(old_name):
-    fullname = request.form.get('fullname')
-    prasang = request.form.get('prasang')
-    pname = request.form.get('pname')
-    tarikh = request.form.get('tarikh')
-    chandlo = request.form.get('chandlo') or 0
-    vasan = request.form.get('vasan')
-    anya = request.form.get('anya')
-    notru = request.form.get('notru')
-    gone = request.form.get('gone')
-    city = request.form.get('city')
-
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    sql = """UPDATE info SET 
-             fullname=%s, prasang=%s, pname=%s, tarikh=%s, 
-             chandlo=%s, vasan=%s, anya=%s, notru=%s, gone=%s, city=%s 
-             WHERE fullname=%s"""
-    
-    cursor.execute(sql, (fullname, prasang, pname, tarikh, chandlo, vasan, anya, notru, gone, city, old_name))
-    conn.commit()
-    conn.close()
-    return redirect(url_for('index'))
-
-@app.route('/delete/<name>')
-def delete_record(name):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM info WHERE fullname = %s", (name,))
-    conn.commit()
-    conn.close()
-    return redirect(url_for('index'))
-
-@app.route('/save', methods=['POST'])
-def save():
-    data = (
-        request.form.get('prasang'),
-        request.form.get('fullname'),
-        request.form.get('pname'),
-        request.form.get('tarikh'),
-        request.form.get('chandlo') or 0,
-        request.form.get('vasan'),
-        request.form.get('anya'),
-        request.form.get('notru'),
-        request.form.get('gone'),
-        request.form.get('city')
-    )
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    sql = "INSERT INTO info (prasang, fullname, pname, tarikh, chandlo, vasan, anya, notru, gone, city) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    cursor.execute(sql, data)
-    conn.commit()
-    conn.close()
-    return redirect(url_for('index'))
+                           t_chandlo=total_chandlo)
 
 @app.route('/profile/<name>')
 def profile(name):
@@ -133,6 +66,20 @@ def profile(name):
         return render_template('profile.html', record=record)
     return "User Not Found", 404
 
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+@app.route('/edit/<name>')
+def edit_page(name):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM info WHERE fullname = %s", (name,))
+    record = cursor.fetchone()
+    conn.close()
+    return render_template('edit.html', record=record)
+
+@app.route('/delete/<name>')
+def delete_record(name):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM info WHERE fullname = %s", (name,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('index'))

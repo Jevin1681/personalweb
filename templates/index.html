@@ -74,60 +74,60 @@
             color: white;
             z-index: 3;
         }
-
-        /* Sabse last column (Actions) ko fix karne ke liye */
-        td:last-child, th:last-child {
-            position: sticky;
-            right: 0;
-            background-color: #f8f9fa; /* Background color zaroori hai taki peeche ka text na dikhe */
-            border-left: 2px solid #ddd;
-            z-index: 2;
-        }
-
-        th:last-child {
-            background-color: #007bff; /* Header color */
-            color: white;
-            z-index: 3;
-        }
-        /* Table container ko scrollable banayein */
-        .table-wrapper {
-            overflow-x: auto;
-            max-width: 100%;
-        }
-
-        table {
-            border-collapse: separate; 
-            border-spacing: 0;
-        }
-
+        /* Table Layout for Mobile */
         .table-container {
             overflow-x: auto;
             position: relative;
-            max-width: 100%;
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
-            border-collapse: separate; 
+            border-collapse: separate;
             border-spacing: 0;
-            width: 100%;
+            min-width: 800px; /* Force scroll on mobile */
         }
 
-        /* Actions column ko right side par chipkane (sticky) ke liye */
-        .action-column {
+        /* Sticky Action Column */
+        .action-col {
             position: sticky;
             right: 0;
-            background-color: #fff; /* Scroll karte waqt background white rahega */
-            z-index: 10;
-            border-left: 2px solid #dee2e6;
-            min-width: 130px;
+            background: #ffffff !important;
+            z-index: 5;
+            border-left: 2px solid #ddd;
+            width: 150px; /* Mobile par tap karne ke liye wide rakha hai */
             text-align: center;
         }
 
-        /* Header ke liye alag color */
-        th.action-column {
+        th.action-col {
             background-color: #007bff !important;
             color: white;
+            z-index: 6;
         }
+
+        /* Edit & Delete Buttons UI */
+        .btn-ui {
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-block;
+            margin: 2px;
+            font-weight: bold;
+        }
+
+        .btn-edit { background-color: #ffc107; color: black; border: 1px solid #e0a800; }
+        .btn-delete { background-color: #dc3545; color: white; border: 1px solid #c82333; }
+
+        /* Totals Box Design */
+        .total-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #28a745;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+    
     </style>
 </head>
 <body>
