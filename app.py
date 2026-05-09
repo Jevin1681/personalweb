@@ -55,6 +55,45 @@ def index():
 def add_page():
     return render_template('add_data.html')
 
+# Route to show the Edit Form
+@app.route('/edit/<int:id>')
+def edit_page(id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM info WHERE id = %s", (id,))
+    record = cursor.fetchone()
+    conn.close()
+    return render_template('edit.html', record=record)
+
+# Route to process the Update
+@app.route('/update/<int:id>', methods=['POST'])
+def update_record(id):
+    # Get data from the form
+    fullname = request.form['fullname']
+    prasang = request.form['prasang']
+    pname = request.form['pname']
+    tarikh = request.form['tarikh']
+    chandlo = request.form['chandlo']
+    vasan = request.form['vasan']
+    anya = request.form['anya']
+    notru = request.form['notru']
+    gone = request.form['gone']
+    city = request.form['city']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    sql = """UPDATE info SET fullname=%s, prasang=%s, pname=%s, tarikh=%s, 
+             chandlo=%s, vasan=%s, anya=%s, notru=%s, gone=%s, city=%s 
+             WHERE id=%s"""
+    values = (fullname, prasang, pname, tarikh, chandlo, vasan, anya, notru, gone, city, id)
+    
+    cursor.execute(sql, values)
+    conn.commit()
+    conn.close()
+    
+    # Redirect back to the profile or home
+    return redirect(url_for('profile', name=fullname))
+
 @app.route('/save', methods=['POST'])
 def save():
     # Database ke saare 10 columns yahan receive ho rahe hain

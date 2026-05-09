@@ -30,6 +30,13 @@
             <div class="item"><span class="label">Notru:</span><span class="value">{{ person.notru }}</span></div>
             <div class="item"><span class="label">Gone Status:</span><span class="value">{{ person.gone }}</span></div>
         </div>
+        <!-- Inside your profile.html -->
+        <div class="profile-header">
+            <h2>Profile of {{ record.fullname }}</h2>
+            <a href="{{ url_for('edit_page', id=record.id) }}" class="btn" style="background: #ffc107; color: #000;">
+                Edit Details
+            </a>
+        </div>      
         <a href="/" class="back-link">Back to Main List</a>
     </div>
 </body>
