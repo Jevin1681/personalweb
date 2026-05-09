@@ -89,6 +89,32 @@
             color: white;
             z-index: 3;
         }
+        /* Table container ko scrollable banayein */
+        .table-wrapper {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        table {
+            border-collapse: separate; 
+            border-spacing: 0;
+        }
+
+        /* Last Column (Actions) ko fix karne ke liye */
+        td:last-child, th:last-child {
+            position: sticky;
+            right: 0;
+            background-color: #ffffff; /* Background zaroori hai warna text overlap dikhega */
+            z-index: 10;
+            border-left: 2px solid #dee2e6;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        th:last-child {
+            background-color: #007bff;
+            color: white;
+        }
     </style>
 </head>
 <body>

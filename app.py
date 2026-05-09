@@ -36,17 +36,21 @@ def index():
     records = cursor.fetchall()
     conn.close()
 
-    # Totals logic
-    total_chandlo = sum(int(item['chandlo'] or 0) for item in records)
-    total_vasan = sum(int(item['vasan'] or 0) for item in records)
-    total_anya = sum(int(item['anya'] or 0) for item in records)
+    # Safe Totals Calculation
+    total_chandlo = 0
+    for item in records:
+        try:
+            # Sirf numbers ko hi plus karega
+            if item['chandlo']:
+                total_chandlo += int(item['chandlo'])
+        except (ValueError, TypeError):
+            continue
 
+    # Note: Vasan aur Anya photo mein text hain, isliye unka Total calculate nahi hoga
     return render_template('index.html', 
                            records=records, 
                            filters=request.args,
-                           t_chandlo=total_chandlo,
-                           t_vasan=total_vasan,
-                           t_anya=total_anya)
+                           t_chandlo=total_chandlo)
 
 @app.route('/add-page')
 def add_page():
@@ -63,27 +67,33 @@ def edit_page(name):
 
 @app.route('/update/<old_name>', methods=['POST'])
 def update_record(old_name):
+    # Form se naya data lena
     fullname = request.form.get('fullname')
     prasang = request.form.get('prasang')
     pname = request.form.get('pname')
     tarikh = request.form.get('tarikh')
     chandlo = request.form.get('chandlo') or 0
-    vasan = request.form.get('vasan') or 0
-    anya = request.form.get('anya') or 0
+    vasan = request.form.get('vasan')
+    anya = request.form.get('anya')
     notru = request.form.get('notru')
     gone = request.form.get('gone')
     city = request.form.get('city')
 
     conn = get_db_connection()
     cursor = conn.cursor()
+    
+    # WHERE fullname = old_name use karenge kyunki id delete kar di hai
     sql = """UPDATE info SET 
              fullname=%s, prasang=%s, pname=%s, tarikh=%s, 
              chandlo=%s, vasan=%s, anya=%s, notru=%s, gone=%s, city=%s 
              WHERE fullname=%s"""
     
-    cursor.execute(sql, (fullname, prasang, pname, tarikh, chandlo, vasan, anya, notru, gone, city, old_name))
+    values = (fullname, prasang, pname, tarikh, chandlo, vasan, anya, notru, gone, city, old_name)
+    
+    cursor.execute(sql, values)
     conn.commit()
     conn.close()
+    
     return redirect(url_for('index'))
 
 @app.route('/delete/<name>')
