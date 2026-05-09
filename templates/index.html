@@ -93,6 +93,14 @@
         }
         .btn-reset:hover { color: #2d3748; }
 
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #a0aec0;
+            font-size: 14px;
+            display: none;
+        }
+
         .table-wrapper {
             background: rgba(255,255,255,0.55);
             border: 1px solid rgba(255,255,255,0.85);
@@ -171,12 +179,11 @@
         <a href="/add-page" class="btn-add">+ Add New</a>
     </div>
 
-    <form method="GET" action="/" class="filter-card">
-        <input type="text" name="fullname" placeholder="🔍 Search by Name" value="{{ filters.fullname or '' }}">
-        <input type="text" name="city" placeholder="🏙️ Search by City" value="{{ filters.city or '' }}">
-        <button type="submit" class="btn-search">Search</button>
+    <div class="filter-card">
+        <input type="text" id="searchName" placeholder="🔍 Search by Name" value="{{ filters.fullname or '' }}">
+        <input type="text" id="searchCity" placeholder="🏙️ Search by City" value="{{ filters.city or '' }}">
         <a href="/" class="btn-reset">✕ Reset</a>
-    </form>
+    </div>
 
     <div class="table-wrapper">
         <div class="table-scroll">
@@ -196,10 +203,10 @@
                         <th>City</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableBody">
                     {% for row in records %}
                     <tr>
-                        <td>{{ loop.index }}</td>
+                        <td class="row-num">{{ loop.index }}</td>
                         <td><a href="{{ url_for('profile', name=row.fullname) }}" class="name-link">{{ row.fullname }}</a></td>
                         <td>{{ row.prasang }}</td>
                         <td>{{ row.pname }}</td>
@@ -216,9 +223,9 @@
                 <tfoot>
                     <tr>
                         <td colspan="5" style="text-align:right; color:#718096; font-size:12px; letter-spacing:1px;">GRAND TOTAL</td>
-                        <td>₹{{ t_chandlo }}</td>
-                        <td>₹{{ t_vasan }}</td>
-                        <td>₹{{ t_anya }}</td>
+                        <td id="totalChandlo">₹{{ t_chandlo }}</td>
+                        <td id="totalVasan">₹{{ t_vasan }}</td>
+                        <td id="totalAnya">₹{{ t_anya }}</td>
                         <td colspan="3"></td>
                     </tr>
                 </tfoot>
@@ -226,5 +233,45 @@
         </div>
     </div>
 
+    <script>
+        const nameInput = document.getElementById('searchName');
+        const cityInput = document.getElementById('searchCity');
+        const tbody = document.getElementById('tableBody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+
+        function liveSearch() {
+            const name = nameInput.value.toLowerCase().trim();
+            const city = cityInput.value.toLowerCase().trim();
+
+            let visibleIndex = 1;
+            let totalChandlo = 0, totalVasan = 0, totalAnya = 0;
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const rowName = cells[1]?.textContent.toLowerCase() || '';
+                const rowCity = cells[10]?.textContent.toLowerCase() || '';
+
+                const match = rowName.includes(name) && rowCity.includes(city);
+                row.style.display = match ? '' : 'none';
+
+                if (match) {
+                    cells[0].textContent = visibleIndex++;
+                    const c = parseFloat(cells[5]?.textContent.replace('₹','')) || 0;
+                    const v = parseFloat(cells[6]?.textContent.replace('₹','')) || 0;
+                    const a = parseFloat(cells[7]?.textContent.replace('₹','')) || 0;
+                    totalChandlo += c;
+                    totalVasan += v;
+                    totalAnya += a;
+                }
+            });
+
+            document.getElementById('totalChandlo').textContent = '₹' + totalChandlo;
+            document.getElementById('totalVasan').textContent = '₹' + totalVasan;
+            document.getElementById('totalAnya').textContent = '₹' + totalAnya;
+        }
+
+        nameInput.addEventListener('input', liveSearch);
+        cityInput.addEventListener('input', liveSearch);
+    </script>
 </body>
 </html>
