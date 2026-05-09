@@ -100,19 +100,32 @@
             border-spacing: 0;
         }
 
-        /* Last Column (Actions) ko fix karne ke liye */
-        td:last-child, th:last-child {
+        .table-container {
+            overflow-x: auto;
+            position: relative;
+            max-width: 100%;
+        }
+
+        table {
+            border-collapse: separate; 
+            border-spacing: 0;
+            width: 100%;
+        }
+
+        /* Actions column ko right side par chipkane (sticky) ke liye */
+        .action-column {
             position: sticky;
             right: 0;
-            background-color: #ffffff; /* Background zaroori hai warna text overlap dikhega */
+            background-color: #fff; /* Scroll karte waqt background white rahega */
             z-index: 10;
             border-left: 2px solid #dee2e6;
-            min-width: 120px;
+            min-width: 130px;
             text-align: center;
         }
 
-        th:last-child {
-            background-color: #007bff;
+        /* Header ke liye alag color */
+        th.action-column {
+            background-color: #007bff !important;
             color: white;
         }
     </style>

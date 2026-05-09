@@ -51,7 +51,7 @@ def index():
     return render_template('index.html', 
                            records=records, 
                            filters=request.args,
-                           t_chandlo=total_chandlo)
+                           t_chandlo=total_chandlo, )
 
 @app.route('/add-page')
 def add_page():
